@@ -11,6 +11,7 @@
 	<meta name="author" content="Dave Shea">
 	<meta name="description" content="A demonstration of what can be accomplished visually through CSS-based design.">
 	<meta name="robots" content="all">
+	<script src="main_b.js"></script>
 </head>
 
 <!--
@@ -44,9 +45,14 @@
 -->
 
 <body id="css-zen-garden">
+
+<div>Select this text</div>
+<span id="counter">Hover this div to know length of selection</span>
+
+
 <div class="jsbursa-panel">
    Введите селектор:
-   <input class="selector" type="text" />
+   <input id="counter2" class="selector" type="text" />
     <button class="selector-find">Найти</button>
     <button class="selector-next" disabled="disabled">Следующий</button>
     <button class="selector-prev" disabled="disabled">Предыдущий</button>
@@ -65,7 +71,7 @@
 			<h2>The Beauty of <abbr title="Cascading Style Sheets">CSS</abbr> Design</h2>
 		</header>
 
-		<div class="summary" id="zen-summary" role="article">
+		<div class="intro" id="zen-summary" role="article"> <!--summary-->
 			<p>A demonstration of what can be accomplished through <abbr title="Cascading Style Sheets">CSS</abbr>-based design. Select any style sheet from the list to load it into this page.</p>
 			<p>Download the example <a href="/examples/index" title="This page's source HTML code, not to be modified.">html file</a> and <a href="/examples/style.css" title="This page's sample CSS, the file you may modify.">css file</a></p>
 		</div>
