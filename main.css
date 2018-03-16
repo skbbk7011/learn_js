@@ -1,0 +1,21 @@
+/* svetofor task1 ex. 3,4*/
+.border {
+    border: solid black 3px;
+    padding: 20px;
+}
+
+.inputzone {
+    background-color: lightblue;
+    margin-bottom: 10px;
+}
+
+
+.light {
+    border: solid black 1px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+
+}
+
+
