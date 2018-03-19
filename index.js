@@ -7,30 +7,57 @@ var colors = [
     'pink'
 ];
 
-document.onload = function () {
+window.onload = function () {
     //ваш код будет здесь
-    window.onclick = function(event) {
+    var body = document.getElementsByTagName('body')[0];
+    body.onclick = function(event) {
         var target = event.target;
-        console.log(target);
-        alert('1111');
-        // цикл двигается вверх от target к родителям до table
-        // while (target != this) {
-        //     console.log(target);
-        //     if (target.tagName == 'TD') {
-        //         // нашли элемент, который нас интересует!
-        //         highlight(target);
-        //         return;
-        //     } else if (target.tagName == 'TD') {
-        //         // нашли элемент, который нас интересует!
-        //         highlight(target);
-        //         return;
-        //     } else if (target.tagName == 'TD') {
-        //         // нашли элемент, который нас интересует!
-        //         highlight(target);
-        //     return;
-        //     }
-        //     target = target.parentNode;
-        // }
+        var randomizeColor = rand(colors);
+        while (target != this) {
+            if (target.className == 'el1') {
+                recolor(target, randomizeColor);
+                valid();
+                return;
+            } else if (target.className == 'el2') {
+                recolor(target, randomizeColor);
+                valid();
+                return;
+            } else if (target.className == 'el3') {
+                recolor(target, randomizeColor);
+                valid();
+                return;
+            }
+            target = target.parentNode;
+
+        }
 
     }
-}
+
+
+    function rand (mass){
+        var rand = Math.floor(Math.random() * mass.length);
+        return mass[rand];
+    }
+
+    function recolor (elem, color){
+        elem.style.backgroundColor = color;
+    }
+
+    function valid (){
+        var collectionEl = document.querySelectorAll('div[class^=\'el\']');
+        var arrColors = [];
+        for(i=0; i<collectionEl.length;i++){
+            arrColors.push(collectionEl[i].style.backgroundColor);
+        }
+
+            function foo(a) {
+                return !a.some(function(b) {
+                    return b !== a[0]
+                })
+            };
+
+        if (foo(arrColors) == true){
+            console.log('done');
+        }
+    }
+};
