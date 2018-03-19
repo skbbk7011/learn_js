@@ -13,6 +13,10 @@ function finder() {
     }
 
     document.querySelector('.selector-find').onclick = function () {
+        if(document.querySelector('._sel')){
+            document.querySelector('._sel').removeAttribute('style');
+            document.querySelector('._sel').classList.remove('._sel');
+        }
         var findBlock = ff();
         if (findBlock.length > 1) {
             initNextBtn();
@@ -37,8 +41,8 @@ function finder() {
     }
 
     function disabledTopBtn(){
-        prev.disabled=enabled;
-        next.disabled=enabled;
+        prev.disabled=true;
+        next.disabled=true;
         next.removeEventListener("click", nextf);
         prev.removeEventListener("click", prevf);
     }
@@ -131,26 +135,26 @@ function finder() {
     }
 
     function topf () {
-        disabledTopBtn()
+        disabledTopBtn();
         clearSelectTree();
         var elemWork = document.querySelector('._active');
         selectTree(elemWork.parentElement);
     }
     function bottomf () {
-        disabledTopBtn()
+        disabledTopBtn();
         clearSelectTree();
         var elemWork = document.querySelector('._active');
         selectTree(elemWork.firstElementChild);
         console.log(elemWork.firstElementChild);
     }
     function leftf () {
-        disabledTopBtn()
+        disabledTopBtn();
         clearSelectTree();
         var elemWork = document.querySelector('._active');
         selectTree(elemWork.previousElementSibling);
     }
     function rightf () {
-        disabledTopBtn()
+        disabledTopBtn();
         clearSelectTree();
         var elemWork = document.querySelector('._active');
         selectTree(elemWork.nextElementSibling);
