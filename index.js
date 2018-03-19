@@ -44,6 +44,7 @@ window.onload = function () {
     }
 
     function valid (){
+
         var collectionEl = document.querySelectorAll('div[class^=\'el\']');
         var arrColors = [];
         for(i=0; i<collectionEl.length;i++){
