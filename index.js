@@ -9,6 +9,9 @@ var colors = [
 
 window.onload = function () {
     var count = prompt()*1;
+    if (count < 2){
+        var count = prompt()*1;
+    }
     generate(count);
     var css = generateCss(count),
         head = document.head || document.getElementsByTagName('head')[0],
@@ -36,6 +39,7 @@ window.onload = function () {
         }
         return css;
     }
+
     function generate (count) {
         for(i=1; i < count+1; i++){
             var color = rand(colors);
@@ -47,38 +51,56 @@ window.onload = function () {
             }
             document.querySelector('.el' + i).style.backgroundColor = color;
         }
-        randRecolor();
     }
+
+    var arrBlock = Array.prototype.slice.call(document.querySelectorAll('div[class^="el"]'));
+
     function rand (mass){
         var rand = Math.floor(Math.random() * mass.length);
         return mass[rand];
     }
-    function recolor (elem, color){
-        elem.style.backgroundColor = color;
-    }
-    function randRecolor(){
-        var color = rand(colors);
-        var arrBlock = [];
-        var elArr = document.querySelectorAll('div[class^="el"]');
-        for (i=0; i< elArr.length; i++){
-            arrBlock.push(elArr[i]);
-        }
-        recolor(rand(arrBlock), color);
-        valid();
-    };
-    function valid(){
-        var collectionEl = document.querySelectorAll('div[class^=\'el\']');
+
+    function valid(arrBlock){
+        var resu = false;
         var arrColors = [];
-
-        for(i=0; i<collectionEl.length;i++){
-            arrColors.push(collectionEl[i].style.backgroundColor);
+        for(i=0; i<arrBlock.length;i++){
+            arrColors.push(arrBlock[i].style.backgroundColor);
         }
-
-        console.log(foo(arrColors));
+        function www (){
+            if(foo(arrColors)==true){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return www();
     }
     function foo(a) {
         return !a.some(function(b) {
             return b !== a[0]
         })
     }
+     var buffer2 = valid(arrBlock);
+     var idIntervals;
+     if  (buffer2 == false) {
+         var idIntervals = setInterval(function () {
+             rand(arrBlock).style.backgroundColor = rand(colors);
+             valid(arrBlock);
+
+         }, 2000);
+     } else {
+         console.log('done');
+         clearInterval(idIntervals);
+
+     }
+
+
+
+
+
+
+
+
+
+
 };
