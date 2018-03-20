@@ -8,31 +8,69 @@ var colors = [
 ];
 
 window.onload = function () {
-    //ваш код будет здесь
-    var body = document.getElementsByTagName('body')[0];
-    body.onclick = function(event) {
-        var target = event.target;
-        var randomizeColor = rand(colors);
-        while (target != this) {
-            if (target.className == 'el1') {
-                recolor(target, randomizeColor);
-                valid();
-                return;
-            } else if (target.className == 'el2') {
-                recolor(target, randomizeColor);
-                valid();
-                return;
-            } else if (target.className == 'el3') {
-                recolor(target, randomizeColor);
-                valid();
-                return;
-            }
-            target = target.parentNode;
+    //var body = document.getElementsByTagName('body')[0];
+    // body.onclick = function(event) {
+    //     var target = event.target;
+    //     var randomizeColor = rand(colors);
+    //     while (target != this) {
+    //         if (target.className == 'el1') {
+    //             recolor(target, randomizeColor);
+    //             valid();
+    //             return;
+    //         } else if (target.className == 'el2') {
+    //             recolor(target, randomizeColor);
+    //             valid();
+    //             return;
+    //         } else if (target.className == 'el3') {
+    //             recolor(target, randomizeColor);
+    //             valid();
+    //             return;
+    //         }
+    //         target = target.parentNode;
+    //
+    //     }
+    //
+    // }
 
-        }
 
+    var count = prompt()*1;
+    generate(count);
+
+    var css = generateCss(count),
+        head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
+
+    style.type = 'text/css';
+    if (style.styleSheet){
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
     }
 
+    head.appendChild(style);
+
+    function generateCss(count){
+        var size = 50;
+        var css = '';
+        for (i=count; i > -1; i--){
+            css += '.el' + i + '{width:' + size + 'px; height:' + size +'px;}';
+            size += 20;
+        }
+        return css;
+    }
+
+    function generate (count) {
+        for(i=1; i < count+1; i++){
+            var color = rand(colors);
+            if (i == 1){
+                document.getElementById('generate').innerHTML='<div class="el'+ i +'" ></div>';
+            } else {
+                var j = i-1;
+                document.querySelector('.el' + j).innerHTML= '<div class="el' + i + '" ></div>';
+            }
+            document.querySelector('.el' + i).style.backgroundColor = color;
+        }
+    }
 
     function rand (mass){
         var rand = Math.floor(Math.random() * mass.length);
@@ -62,12 +100,8 @@ window.onload = function () {
         }
     }
 
-    var count = prompt();
 
-    function generate (prompt) {
-        for(i=0; i< prompt; i++){
-            echo('<div class="el"></div>');
-        }
-    }
+
+
 
 };
