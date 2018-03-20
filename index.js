@@ -61,4 +61,13 @@ window.onload = function () {
             console.log('done');
         }
     }
+
+    var count = prompt();
+
+    function generate (prompt) {
+        for(i=0; i< prompt; i++){
+            echo('<div class="el"></div>');
+        }
+    }
+
 };
