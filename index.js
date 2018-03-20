@@ -82,17 +82,15 @@ window.onload = function () {
     }
      var buffer2 = valid(arrBlock);
      var idIntervals;
-     if  (buffer2 == false) {
-         var idIntervals = setInterval(function () {
-             rand(arrBlock).style.backgroundColor = rand(colors);
-             valid(arrBlock);
+    var idIntervals = setInterval(function () {
+        if  (valid(arrBlock) == false) {
+            rand(arrBlock).style.backgroundColor = rand(colors);
+            valid(arrBlock);
+        }
+    }, 2000);
 
-         }, 2000);
-     } else {
-         console.log('done');
-         clearInterval(idIntervals);
 
-     }
+
 
 
 
