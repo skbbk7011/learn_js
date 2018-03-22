@@ -18,6 +18,7 @@ function send() {
     };
 
     var i = 0;
+    var ticketNum = '';
     socket.onmessage = function(event) {
         var json = JSON.parse(event.data);
 
@@ -35,6 +36,8 @@ function send() {
         price.textContent = json.price.toFixed(1);
 
         graph[i].style.height = json.price+'px';
+
+        ticketNum = json.ticket;
     };
     socket.onerror = function(error) {
         alert("Ошибка " + error.message);
@@ -43,34 +46,23 @@ function send() {
 
     document.querySelector('button').addEventListener('click', function () {
 
-        //http://127.0.0.1:3000/sell
+        //127.0.0.1:3000/sell
+        // script = document.createElement("script");
+        // script.type = "text/javascript";
+        // script.src = "http://127.0.0.1:3000/sell?data="+ticketNum+"&format=json&callback=toJsonContainer";
+        //
+        // document.getElementsByTagName('head')[0].appendChild(script);
+        //
+        // toJsonContainer = function(data){
+        //     console.log(data);
+        // };
 
-        script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "http://127.0.0.1:3000/sell?action=parse&format=json&callback=toJsonContainer";
 
-        document.getElementsByTagName('head')[0].appendChild(script);
 
-        toJsonContainer = function(data){
-            console.log(data);
-            //document.getElementById('content').innerHTML = data ;
-        };
     })
 
 }
 
 
 document.addEventListener("DOMContentLoaded", send);
-
-
-/*
-* можно сделать функцию которую потом вызывать (вместо повторяющегося кода)
-* для обработки ошибок
-* если нужно я доделаю, но как я поняла суть понять как обработать ошибки и успешный ответ
-* я как поняла это все задание, если чего то не доделала...то могла недопонять суть задания....
-* и доделаю после обьснения)))
-*
-* вывод: понять, что такое  readyState, status, success, async и прочие настройки,
-* их много, можно найти в интернете их описание
-*/
 
