@@ -1,7 +1,11 @@
 function send() {
+    var graph = document.querySelectorAll('.graphbar');
+    var price = document.querySelector('.value');
     var socket = new WebSocket("ws://127.0.0.1:3000/ws");
+
+
     socket.onopen = function() {
-        alert("Соединение установлено.");
+        console.log("Соединение установлено.");
     };
 
     socket.onclose = function(event) {
@@ -13,14 +17,37 @@ function send() {
         alert('Код: ' + event.code + ' причина: ' + event.reason);
     };
 
+    var i = 0;
     socket.onmessage = function(event) {
-        alert("Получены данные " + event.data);
-    };
+        var json = JSON.parse(event.data);
 
+
+        i++;
+        if (i > graph.length-1){
+            i = 0;
+        }
+
+        if (json.price > 200){
+            price.style.color = 'green';
+        } else {
+            price.style.color = 'red';
+        }
+        price.textContent = json.price.toFixed(1);
+
+        graph[i].style.height = json.price+'px';
+    };
     socket.onerror = function(error) {
         alert("Ошибка " + error.message);
     };
+
+    function sell() {
+        //http://127.0.0.1:3000/sell
+    }
+
+
 }
+
+
 
 
 document.addEventListener("DOMContentLoaded", send);
