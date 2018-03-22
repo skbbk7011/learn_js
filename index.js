@@ -4,8 +4,10 @@ function send() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.querySelector('.get').textContent = 'OK';
-        } else {
+            document.querySelector('.get').style = "color:green;font-weight:bold";
+        } else if (this.status != 200){
             document.querySelector('.get').textContent = 'Failed';
+            document.querySelector('.get').style = "color:red;font-weight:bold";
         }
 
     };
@@ -17,8 +19,10 @@ function send() {
     xhttp2.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.querySelector('.post').textContent = 'OK';
-        } else {
-            document.querySelector('.post').textContent = 'Failed';
+            document.querySelector('.post').style = "color:green;font-weight:bold";
+        } else if (this.status != 200){
+            document.querySelector('.post').textContent = 'filed';
+            document.querySelector('.post').style = "color:red;font-weight:bold";
         }
     };
     xhttp2.open("POST", "https://cors-test.appspot.com/test", true);
@@ -29,8 +33,10 @@ function send() {
     xhttp3.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.querySelector('.weird').textContent = 'OK';
-        } else {
-            document.querySelector('.weird').textContent = 'Failed';
+            document.querySelector('.weird').style = "color:green;font-weight:bold";
+        } else if (this.status != 200){
+            document.querySelector('.weird').textContent = 'filed';
+            document.querySelector('.weird').style = "color:red;font-weight:bold";
         }
     };
     xhttp3.open("WEIRD", "https://cors-test.appspot.com/test", true);
