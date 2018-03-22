@@ -1,46 +1,25 @@
 function send() {
-    //GET
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.querySelector('.get').textContent = 'OK';
-            document.querySelector('.get').style = "color:green;font-weight:bold";
-        } else if (this.status != 200){
-            document.querySelector('.get').textContent = 'Failed';
-            document.querySelector('.get').style = "color:red;font-weight:bold";
-        }
-
+    var socket = new WebSocket("ws://127.0.0.1:3000/ws");
+    socket.onopen = function() {
+        alert("Соединение установлено.");
     };
-    xhttp.open("GET", "https://cors-test.appspot.com/test", true);
-    xhttp.send();
 
-    //POST
-    var xhttp2 = new XMLHttpRequest();
-    xhttp2.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.querySelector('.post').textContent = 'OK';
-            document.querySelector('.post').style = "color:green;font-weight:bold";
-        } else if (this.status != 200){
-            document.querySelector('.post').textContent = 'filed';
-            document.querySelector('.post').style = "color:red;font-weight:bold";
+    socket.onclose = function(event) {
+        if (event.wasClean) {
+            alert('Соединение закрыто чисто');
+        } else {
+            alert('Обрыв соединения'); // например, "убит" процесс сервера
         }
+        alert('Код: ' + event.code + ' причина: ' + event.reason);
     };
-    xhttp2.open("POST", "https://cors-test.appspot.com/test", true);
-    xhttp2.send();
 
-    //POST
-    var xhttp3 = new XMLHttpRequest();
-    xhttp3.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.querySelector('.weird').textContent = 'OK';
-            document.querySelector('.weird').style = "color:green;font-weight:bold";
-        } else if (this.status != 200){
-            document.querySelector('.weird').textContent = 'filed';
-            document.querySelector('.weird').style = "color:red;font-weight:bold";
-        }
+    socket.onmessage = function(event) {
+        alert("Получены данные " + event.data);
     };
-    xhttp3.open("WEIRD", "https://cors-test.appspot.com/test", true);
-    xhttp3.send();
+
+    socket.onerror = function(error) {
+        alert("Ошибка " + error.message);
+    };
 }
 
 
