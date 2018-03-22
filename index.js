@@ -40,14 +40,24 @@ function send() {
         alert("Ошибка " + error.message);
     };
 
-    function sell() {
-        //http://127.0.0.1:3000/sell
-    }
 
+    document.querySelector('button').addEventListener('click', function () {
+
+        //http://127.0.0.1:3000/sell
+
+        script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "http://127.0.0.1:3000/sell?action=parse&format=json&callback=toJsonContainer";
+
+        document.getElementsByTagName('head')[0].appendChild(script);
+
+        toJsonContainer = function(data){
+            console.log(data);
+            //document.getElementById('content').innerHTML = data ;
+        };
+    })
 
 }
-
-
 
 
 document.addEventListener("DOMContentLoaded", send);
@@ -63,5 +73,4 @@ document.addEventListener("DOMContentLoaded", send);
 * вывод: понять, что такое  readyState, status, success, async и прочие настройки,
 * их много, можно найти в интернете их описание
 */
-
 
