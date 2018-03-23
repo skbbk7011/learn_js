@@ -43,7 +43,7 @@ function send() {
             var jsonAnswer = JSON.parse(this.response);
             var error = 'sell was ' + jsonAnswer.success+ ', becouse ' + jsonAnswer.reason;
             if (this.status == 200 && this.readyState == 4){
-                if (aa.success == true){
+                if (jsonAnswer.success == true){
                     amount += jsonAnswer.lag;
                     document.querySelector('.sellAmount').textContent = amount;
                 }
