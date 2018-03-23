@@ -79,40 +79,27 @@ document.addEventListener('DOMContentLoaded', task11925_1);
 
 
 function task11925_2(){
-    function printResultToDiv(value, target) {
-        document.querySelector('#' + target).textContent = value;
-    }
+    function linearize (inArr) {
+        console.log(inArr);
+        var outArr = [];
 
-    function printArrayToDiv(array, target) {
-        printResultToDiv('[' + array.join(', ') + ']', target);
-    }
-
-    function cleanArray (arr) {
-        var result = [];
-        for(i=0; i<arr.length-1; i++){
-            if(typeof(1) === typeof(arr[i])){
-                result.push(arr[i]);
+        for (f=0;f<inArr.length; f++){
+            for (j=0;j<inArr[f].length; j++){
+                outArr.push(inArr[f][j]);
             }
         }
-        return result;
+        print(inArr, outArr);
     }
 
-    function average (arr) {
-        var result = 1;
-        for (i=0;i<arr.length;i++){
-            result = result * arr[i];
-        }
-        result = Math.pow(result,1/arr.length);
-        return result;
+    function print(defMass, linearize){
+        console.log(linearize);
+        console.log(defMass + ' --> ' + linearize);
     }
 
-    var sourceArray = [1, "37", 45, "котик", undefined, null, "44", "22.3"];
-    printArrayToDiv(sourceArray, 'source');
+    linearize([[1],[2], [3, 4, 5]]);
+    linearize([[1, 2], [3], [4], [5]]);
+    linearize([[1, 2], [3,[[6],[7]]], [4], [5]]);
 
-    var cleanedArray = cleanArray(sourceArray);
-    printArrayToDiv(cleanedArray, 'result');
-
-    printResultToDiv(average(cleanedArray), 'avg');
 
 }
 document.addEventListener('DOMContentLoaded', task11925_2);
