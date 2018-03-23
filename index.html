@@ -3,14 +3,13 @@
     <meta charset="utf-8">
     <script src="common.js"></script>
     <link href="main.css" rel="stylesheet">
+    <style>.wrapper {font-size: 40px;}  #source {border: solid red 2px;}  #result {border: solid blue 2px;}  #avg {border: solid green 2px;}</style>
 </head>
 <body>
 
 <!--svetofor-->
 <div class="border">
     <h1>Светофор Nightmare Edition</h1>
-
-
     <h2>...или так верстают только...</h2>
 
     <div class="border">
@@ -27,12 +26,25 @@
         </div></span>
             </div>
         </div>
-        <div class="inputzone"> <span><button>Click me</button></span>
+        <div class="inputzone"><span><button>Click me</button></span>
 
             <div class="light" style="background-color: green;"></div>
         </div>
     </div>
 </div>
+
+
+<!--Task #11925(1)-->
+<div class="wrapper">
+На входе: <div id="source"></div>
+На выходе: <div id="result"></div>
+Среднее геометрическое: <div id="avg"></div>
+</div>
+
+
+
+<!--Task #11925(2)-->
+
 
 </body>
 </html>
