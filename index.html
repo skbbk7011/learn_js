@@ -2,49 +2,14 @@
 <head>
     <meta charset="utf-8">
     <script src="common.js"></script>
-    <link href="main.css" rel="stylesheet">
-    <style>.wrapper {font-size: 40px;}  #source {border: solid red 2px;}  #result {border: solid blue 2px;}  #avg {border: solid green 2px;}</style>
+    <style> #borders {position: relative;width: 500px;height: 500px;border: solid red 3px;}  #flyer {position: absolute;width: 40px;height: 40px;background-color: blue;border-radius: 20px;left: 40px;top: 200px;}</style>
 </head>
 <body>
 
-<!--svetofor-->
-<div class="border">
-    <h1>Светофор Nightmare Edition</h1>
-    <h2>...или так верстают только...</h2>
-
-    <div class="border">
-        <div class="inputzone">
-            <button>Click me
-                <div class="light" style="background-color: red;"></div>
-            </button>
-        </div>
-        <div class="inputzone">
-            <button>Click me</button>
-            <div><span><div>
-            <!-- оторвался от души с тегами -->
-            <div class="light" style="background-color: yellow;"></div>
-        </div></span>
-            </div>
-        </div>
-        <div class="inputzone"><span><button>Click me</button></span>
-
-            <div class="light" style="background-color: green;"></div>
-        </div>
+<div id="borders">
+    <div id="flyer">
     </div>
 </div>
-
-
-<!--Task #11925(1)-->
-<div class="wrapper">
-На входе: <div id="source"></div>
-На выходе: <div id="result"></div>
-Среднее геометрическое: <div id="avg"></div>
-</div>
-
-
-
-<!--Task #11925(2)-->
-
 
 </body>
 </html>
