@@ -14,24 +14,36 @@ function ready() {
         rand = Math.floor(rand);
         return rand;
     }
+    function randomFloat(min, max) {
+        return min + Math.random() * (max - min);
+    }
 
-    function create(c) {
+    function create(c, size) {
         var colors = [
             'red',
             'grey',
+            'lightyellow',
             'yellow',
             'green',
-            'pink'
+            'lightgreen',
+            'lightpink',
+            'pink',
+            'orange',
+            'purple',
+            'blue',
+            'lightblue',
+            'lightred'
         ];
 
         for (i=0;i<count;i++){
 
+            var _size = randomFloat(0.5, 1.5);
             var el = document.createElement('div');
             el.id = 'flyer'+i;
-            el.style = 'width: 40px;' +
-                'height: 40px;' +
+            el.style = 'width: '+size*_size+'px;' +
+                'height: '+size*_size+'px;' +
                 'background-color: '+ rand(colors) +';' +
-                'border-radius: 20px;' +
+                'border-radius: '+size*_size/2+'px;' +
                 'left: '+randomInteger(30, canvasW-30)+'px;' +
                 'top: '+randomInteger(30, canvasH-30)+'px;';
             document.getElementById('borders').appendChild(el);
@@ -44,24 +56,30 @@ function ready() {
 
     }
 
+    function init(){
+
+        for (i=0;i<count;i++){
+
+            var nameVar = 'fly'+i;
+            var name = 'flyer'+i;
+            eval('nameVar.init();') ;
+            // eval('nameVar.init()');
+
+        }
+    }
+
     var fly = function(el){
-
-
         var dx = 2;
         var dy = 2;
 
+        this.init = function () {
 
-       // this.init = function (el) {
-            var elem = document.getElementById(el);
-            var stepLeft = elem.getBoundingClientRect().left;
-            var stepDown = elem.getBoundingClientRect().top;
-            draw();
-      //  };
+        }
+        var elem = document.getElementById(el);
+        var stepLeft = elem.getBoundingClientRect().left;
+        var stepDown = elem.getBoundingClientRect().top;
 
-        this.create = function () {
-
-        };
-
+        draw();
 
         function draw (){
             stepLeft += dx;
@@ -85,13 +103,18 @@ function ready() {
 
     };
 
+    alert('0 < count < 5 && max size = 40px');
     var count = prompt();
     if (count > 0 && count <= 5){
-        create(count);
+        create(count, 40);
     } else {
         alert('0 < count < 5');
         var count = prompt();
     }
+
+
+    document.getElementById('borders').addEventListener('click',init);
+
 }
 
 
