@@ -4,12 +4,12 @@ function ready() {
     var canvas = document.getElementById('borders');
     var canvasW = canvas.clientWidth;
     var canvasH = canvas.clientHeight;
+    var flag = true;
 
     function rand (mass){
         var rand = Math.floor(Math.random() * mass.length);
         return mass[rand];
     }
-
     function randomInteger(min, max) {
         var rand = min + Math.random() * (max + 1 - min);
         rand = Math.floor(rand);
@@ -18,14 +18,6 @@ function ready() {
     function randomFloat(min, max) {
         return min + Math.random() * (max - min);
     }
-
-
-    function onmouseup(/*MouseEvent*/ e){
-        for(i=0;i<document.title;i++){
-            init(i);
-        }
-    }
-
 
     function Ball(){
         this.x = 0;
@@ -106,14 +98,20 @@ function ready() {
             elem.style.left = stepLeft+'px';
             elem.style.top = stepDown+'px';
 
-            requestAnimationFrame(draw);
+            if(flag == true){
+                requestAnimationFrame(draw);
+            } else {
+                console.log('mouseout');
+            }
+
         }
 
     };
 
+
+
     var count = prompt();
     if (count > 0 && count <= 5){
-            //create(count, 40);
             for(var i = 0; i < count; i++){
                 create(i,40);
             }
@@ -122,8 +120,27 @@ function ready() {
             var count = prompt();
         }
 
-    console.log(ball);
+    function onmouseup(/*MouseEvent*/ e){
+        for(i=0;i<document.title;i++){
+            init(i);
+        }
+
+        document.getElementById('borders').addEventListener("mouseover", mouseover, true);
+        document.getElementById('borders').addEventListener("mouseout", mouseout, true);
+    }
+    function mouseover(/*MouseEvent*/ e){
+        flag = true;
+        for(i=0;i<document.title;i++){
+            var nameVar = 'fly'+i;
+            var name = 'flyer'+i;
+            eval('var nameVar = new fly(name)') ;
+        }
+    }
+    function mouseout(/*MouseEvent*/ e){
+        flag = false;
+    }
     document.getElementById('borders').addEventListener("mouseup", onmouseup, true);
+
 }
 
 document.addEventListener('DOMContentLoaded', ready);
