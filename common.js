@@ -10,7 +10,139 @@
 */
 
 function ready() {
-   /* var aBalls;
+    var aBalls;
+    var ball = new Array(); // в этом массиве будут храниться все объекты
+    var canvas = document.getElementById('borders');
+    var canvasW = canvas.clientWidth;
+    var canvasH = canvas.clientHeight;
+    var flag = true;
+    var colors = ['red', 'grey', 'lightyellow', 'yellow', 'green', 'lightgreen', 'lightpink', 'pink', 'orange', 'purple', 'blue', 'lightblue', 'lightred'];
+    var dx = 2;
+    var dy = 2;
+
+
+    function rand (mass){
+        var rand = Math.floor(Math.random() * mass.length);
+        return mass[rand];
+    }
+    function randomInteger(min, max) {
+        var rand = min + Math.random() * (max + 1 - min);
+        rand = Math.floor(rand);
+        return rand;
+    }
+    function randomFloat(min, max) {
+        return min + Math.random() * (max - min);
+    }
+
+    function Ball(){
+        const sizeDefoult = 40;
+        const _size = randomFloat(0.5, 1.5);
+        const size = sizeDefoult*_size;
+
+        this.name = 'flyer'+randomInteger(0, 10);
+        this.x = randomInteger(30, 400);
+        this.y = randomInteger(30, 400);
+        this.vx = 0;
+        this.vy = 0;
+        this.r = size/2; // Radius
+
+        this.create = function (){
+            var el = document.createElement('div');
+            el.id = this.name;
+            el.style = 'width: '+size+'px;' +
+                'height: '+size+'px;' +
+                'background-color: '+ rand(colors) +';' +
+                'border-radius: '+this.r+'px;' +
+                'left: '+this.x+'px;' +
+                'top: '+this.y+'px;';
+            document.getElementById('borders').appendChild(el);
+        };
+
+        this.draw = function (name,x,y,r){
+            x += dx;
+            y += dy;
+            if (x+r*2 > canvasW){
+                dx = -2;
+            } else if (x < 0){
+                dx = 2;
+            }
+            if(y+r*2 > canvasH){
+                dy = -2;
+            } else if (y < 0){
+                dy = 2;
+            }
+            var _self = this;
+            document.getElementById(name).style.left = x+'px';
+            document.getElementById(name).style.top = y+'px';
+            requestAnimationFrame(this.draw.bind(this));
+        };
+        this.collision = function(){
+
+        };
+        this.start = function (){
+            this.draw(this.name, this.x, this.y, this.r);
+        };
+        this.stop = function () {
+
+        }
+    }
+
+
+    var aBall = new Ball();
+    aBall.create();
+    aBall.start();
+    ball.push(aBall);
+
+    var aBall2 = new Ball();
+    aBall2.create();
+    aBall2.start();
+    ball.push(aBall2);
+
+    console.log(ball);
+
+
+   /*
+    var count = prompt();
+    if (count > 0 && count <= 5){
+        for(var i = 0; i < count; i++){
+            create(i,40);
+        }
+    } else {
+        alert('0 < count < 5');
+        var count = prompt();
+    }*/
+
+
+
+
+
+    function onmouseup(/*MouseEvent*/ e){
+        for(i=0;i<document.title;i++){
+            init(i);
+        }
+        document.getElementById('borders').addEventListener("mouseover", mouseover, true);
+        document.getElementById('borders').addEventListener("mouseout", mouseout, true);
+    }
+    function mouseover(/*MouseEvent*/ e){
+        flag = true;
+        for(i=0;i<document.title;i++){
+            var nameVar = 'fly'+i;
+            var name = 'flyer'+i;
+            eval('var nameVar = new fly(name)') ;
+        }
+    }
+    function mouseout(/*MouseEvent*/ e){
+        flag = false;
+    }
+
+    document.addEventListener("mouseup", onmouseup, true);
+}
+
+document.addEventListener('DOMContentLoaded', ready);
+
+
+
+/* var aBalls;
     var ball = new Array(); // в этом массиве будут храниться все объекты
     var canvas = document.getElementById('borders');
     var canvasW = canvas.clientWidth;
@@ -145,133 +277,3 @@ function ready() {
                 flag = false;
     }
 */
-
-    var aBalls;
-    var ball = new Array(); // в этом массиве будут храниться все объекты
-    var canvas = document.getElementById('borders');
-    var canvasW = canvas.clientWidth;
-    var canvasH = canvas.clientHeight;
-    var flag = true;
-    var colors = ['red', 'grey', 'lightyellow', 'yellow', 'green', 'lightgreen', 'lightpink', 'pink', 'orange', 'purple', 'blue', 'lightblue', 'lightred'];
-    var dx = 2;
-    var dy = 2;
-
-
-    function rand (mass){
-        var rand = Math.floor(Math.random() * mass.length);
-        return mass[rand];
-    }
-    function randomInteger(min, max) {
-        var rand = min + Math.random() * (max + 1 - min);
-        rand = Math.floor(rand);
-        return rand;
-    }
-    function randomFloat(min, max) {
-        return min + Math.random() * (max - min);
-    }
-
-    function Ball(){
-        const sizeDefoult = 40;
-        const _size = randomFloat(0.5, 1.5);
-        const size = sizeDefoult*_size;
-
-        this.name = 'flyer'+randomInteger(0, 10);
-        this.x = randomInteger(30, 400);
-        this.y = randomInteger(30, 400);
-        this.vx = 0;
-        this.vy = 0;
-        this.r = size/2; // Radius
-
-        this.create = function (){
-            var el = document.createElement('div');
-            el.id = this.name;
-            el.style = 'width: '+size+'px;' +
-                'height: '+size+'px;' +
-                'background-color: '+ rand(colors) +';' +
-                'border-radius: '+this.r+'px;' +
-                'left: '+this.x+'px;' +
-                'top: '+this.y+'px;';
-            document.getElementById('borders').appendChild(el);
-        };
-
-        this.draw = function (name,x,y,r){
-            x += dx;
-            y += dy;
-            if (x+r*2 > canvasW){
-                dx = -2;
-            } else if (x < 0){
-                dx = 2;
-            }
-            if(y+r*2 > canvasH){
-                dy = -2;
-            } else if (y < 0){
-                dy = 2;
-            }
-            var _self = this;
-            document.getElementById(name).style.left = x+'px';
-            document.getElementById(name).style.top = y+'px';
-            requestAnimationFrame(this.draw.bind(this));
-        };
-        this.collision = function(){
-
-        };
-        this.start = function (){
-            this.draw(this.name, this.x, this.y, this.r);
-        };
-        this.stop = function () {
-
-        }
-    }
-
-
-    var aBall = new Ball();
-    aBall.create();
-    aBall.start();
-    ball.push(aBall);
-
-    var aBall2 = new Ball();
-    aBall2.create();
-    aBall2.start();
-    ball.push(aBall2);
-
-    console.log(ball);
-
-
-   /*
-    var count = prompt();
-    if (count > 0 && count <= 5){
-        for(var i = 0; i < count; i++){
-            create(i,40);
-        }
-    } else {
-        alert('0 < count < 5');
-        var count = prompt();
-    }*/
-
-
-
-
-
-    function onmouseup(/*MouseEvent*/ e){
-        for(i=0;i<document.title;i++){
-            init(i);
-        }
-        document.getElementById('borders').addEventListener("mouseover", mouseover, true);
-        document.getElementById('borders').addEventListener("mouseout", mouseout, true);
-    }
-    function mouseover(/*MouseEvent*/ e){
-        flag = true;
-        for(i=0;i<document.title;i++){
-            var nameVar = 'fly'+i;
-            var name = 'flyer'+i;
-            eval('var nameVar = new fly(name)') ;
-        }
-    }
-    function mouseout(/*MouseEvent*/ e){
-        flag = false;
-    }
-
-    document.addEventListener("mouseup", onmouseup, true);
-}
-
-document.addEventListener('DOMContentLoaded', ready);
