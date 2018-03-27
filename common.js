@@ -80,7 +80,6 @@ function ready() {
 
         draw();
 
-
         function draw (){
             stepLeft += dx;
             stepDown += dy;
@@ -100,12 +99,8 @@ function ready() {
 
             if(flag == true){
                 requestAnimationFrame(draw);
-            } else {
-                console.log('mouseout');
             }
-
         }
-
     };
 
 
@@ -124,7 +119,6 @@ function ready() {
         for(i=0;i<document.title;i++){
             init(i);
         }
-
         document.getElementById('borders').addEventListener("mouseover", mouseover, true);
         document.getElementById('borders').addEventListener("mouseout", mouseout, true);
     }
@@ -137,6 +131,8 @@ function ready() {
         }
     }
     function mouseout(/*MouseEvent*/ e){
+        console.log(e.target);
+        console.log(e);
         flag = false;
     }
     document.getElementById('borders').addEventListener("mouseup", onmouseup, true);
