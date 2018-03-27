@@ -216,7 +216,6 @@ function ready() {
 
         };
         this.start = function (){
-
             this.draw(this.name, this.x, this.y, this.r);
         };
         this.stop = function () {
@@ -238,73 +237,7 @@ function ready() {
     console.log(ball);
 
 
-   /* function create(count,size) {
-
-
-        var _size = randomFloat(0.5, 1.5);
-        var el = document.createElement('div');
-        el.id = 'flyer'+i;
-        el.style = 'width: '+size*_size+'px;' +
-            'height: '+size*_size+'px;' +
-            'background-color: '+ rand(colors) +';' +
-            'border-radius: '+size*_size/2+'px;' +
-            'left: '+randomInteger(30, canvasW-30)+'px;' +
-            'top: '+randomInteger(30, canvasH-30)+'px;';
-        document.getElementById('borders').appendChild(el);
-
-
-        var elem = document.getElementById('flyer'+i);
-        aBall = new Ball();
-        aBall.x = elem.style.left;
-        aBall.y = elem.style.top;
-        aBall.r = elem.style.borderRadius;
-        ball.push(aBall);
-
-        document.title = ball.length;
-
-    }
-    function init(j){
-        var nameVar = 'fly'+j;
-        var name = 'flyer'+j;
-        eval('var nameVar = new fly(name)') ;
-    }
-    var fly = function(el){
-
-
-        var elem = document.getElementById(el);
-        var stepLeft = elem.getBoundingClientRect().left;
-        var stepDown = elem.getBoundingClientRect().top;
-
-        draw();
-
-        function draw (){
-            stepLeft += dx;
-            stepDown += dy;
-            if (stepLeft+elem.clientWidth > canvasW){
-                dx = -2;
-            } else if (stepLeft < 0){
-                dx = 2;
-            }
-            if(stepDown+elem.clientHeight > canvasH){
-                dy = -2;
-            } else if (stepDown < 0){
-                dy = 2;
-            }
-
-            elem.style.left = stepLeft+'px';
-            elem.style.top = stepDown+'px';
-
-            if(flag == true){
-                requestAnimationFrame(draw);
-            }
-        }
-    };
-
-
-
-
-
-
+   /*
     var count = prompt();
     if (count > 0 && count <= 5){
         for(var i = 0; i < count; i++){
