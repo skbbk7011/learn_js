@@ -22,9 +22,7 @@ function ready() {
 
     function onmouseup(/*MouseEvent*/ e){
         for(i=0;i<document.title;i++){
-            var nameVar = 'fly'+i;
-            eval('var nameVar = new fly(name)') ;
-            nameVar.draw();
+            init(i);
         }
     }
 
@@ -118,7 +116,6 @@ function ready() {
             //create(count, 40);
             for(var i = 0; i < count; i++){
                 create(i,40);
-                init(i);
             }
         } else {
             alert('0 < count < 5');
