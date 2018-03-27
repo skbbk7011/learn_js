@@ -1,5 +1,6 @@
 function ready() {
-
+    var aBalls;
+    var ball = new Array(); // в этом массиве будут храниться все объекты
     var canvas = document.getElementById('borders');
     var canvasW = canvas.clientWidth;
     var canvasH = canvas.clientHeight;
@@ -18,7 +19,24 @@ function ready() {
         return min + Math.random() * (max - min);
     }
 
-    function create(c, size) {
+
+    function onmouseup(/*MouseEvent*/ e){
+        for(i=0;i<document.title;i++){
+            var nameVar = 'fly'+i;
+            eval('var nameVar = new fly(name)') ;
+            nameVar.draw();
+        }
+    }
+
+
+    function Ball(){
+        this.x = 0;
+        this.y = 0;
+        this.vx = 0;
+        this.vy = 0;
+        this.r = 2; // Radius
+    }
+    function create(count,size) {
         var colors = [
             'red',
             'grey',
@@ -35,8 +53,6 @@ function ready() {
             'lightred'
         ];
 
-        for (i=0;i<count;i++){
-
             var _size = randomFloat(0.5, 1.5);
             var el = document.createElement('div');
             el.id = 'flyer'+i;
@@ -47,39 +63,33 @@ function ready() {
                 'left: '+randomInteger(30, canvasW-30)+'px;' +
                 'top: '+randomInteger(30, canvasH-30)+'px;';
             document.getElementById('borders').appendChild(el);
-            var nameVar = 'fly'+i;
-            var name = 'flyer'+i;
-            eval('var nameVar = new fly(name)') ;
-           // eval('nameVar.init()');
 
-        }
+
+            var elem = document.getElementById('flyer'+i);
+            aBall = new Ball();
+            aBall.x = elem.style.left;
+            aBall.y = elem.style.top;
+            aBall.r = elem.style.borderRadius;
+            ball.push(aBall);
+
+        document.title = ball.length;
 
     }
-
-    function init(){
-
-        for (i=0;i<count;i++){
-
-            var nameVar = 'fly'+i;
-            var name = 'flyer'+i;
-            eval('nameVar.init();') ;
-            // eval('nameVar.init()');
-
-        }
+    function init(j){
+             var nameVar = 'fly'+j;
+             var name = 'flyer'+j;
+             eval('var nameVar = new fly(name)') ;
     }
-
     var fly = function(el){
         var dx = 2;
         var dy = 2;
 
-        this.init = function () {
-
-        }
         var elem = document.getElementById(el);
         var stepLeft = elem.getBoundingClientRect().left;
         var stepDown = elem.getBoundingClientRect().top;
 
         draw();
+
 
         function draw (){
             stepLeft += dx;
@@ -103,20 +113,20 @@ function ready() {
 
     };
 
-    alert('0 < count < 5 && max size = 40px');
     var count = prompt();
     if (count > 0 && count <= 5){
-        create(count, 40);
-    } else {
-        alert('0 < count < 5');
-        var count = prompt();
-    }
+            //create(count, 40);
+            for(var i = 0; i < count; i++){
+                create(i,40);
+                init(i);
+            }
+        } else {
+            alert('0 < count < 5');
+            var count = prompt();
+        }
 
-
-    document.getElementById('borders').addEventListener('click',init);
-
+    console.log(ball);
+    document.getElementById('borders').addEventListener("mouseup", onmouseup, true);
 }
-
-
 
 document.addEventListener('DOMContentLoaded', ready);
