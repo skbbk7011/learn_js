@@ -17,8 +17,8 @@ function ready() {
     var canvasH = canvas.clientHeight;
     var flag = true;
     var colors = ['red', 'grey', 'lightyellow', 'yellow', 'green', 'lightgreen', 'lightpink', 'pink', 'orange', 'purple', 'blue', 'lightblue', 'lightred'];
-    var dx = 2;
-    var dy = 2;
+
+    var flyersStopped = false;
 
 
     function rand (mass){
@@ -35,9 +35,11 @@ function ready() {
     }
 
     function Ball(){
-        const sizeDefoult = 40;
+        const sizeDefult = 40;
         const _size = randomFloat(0.5, 1.5);
-        const size = sizeDefoult*_size;
+        const size = sizeDefult*_size;
+        var dx = randomInteger(1,5);
+        var dy = randomInteger(1,5);
 
         this.name = 'flyer'+randomInteger(0, 10);
         this.x = randomInteger(30, 400);
@@ -45,6 +47,7 @@ function ready() {
         this.vx = 0;
         this.vy = 0;
         this.r = size/2; // Radius
+        var _self = this;
 
         this.create = function (){
             var el = document.createElement('div');
@@ -57,8 +60,11 @@ function ready() {
                 'top: '+this.y+'px;';
             document.getElementById('borders').appendChild(el);
         };
-
-        this.draw = function (name,x,y,r){
+        this.move = function (){
+            var x = _self.x,
+                y = _self.y,
+                name = _self.name,
+                r = _self.r;
             x += dx;
             y += dy;
             if (x+r*2 > canvasW){
@@ -71,22 +77,33 @@ function ready() {
             } else if (y < 0){
                 dy = 2;
             }
-            var _self = this;
             document.getElementById(name).style.left = x+'px';
             document.getElementById(name).style.top = y+'px';
-            requestAnimationFrame(this.draw.bind(this));
+
+            _self.x = x;
+            _self.y = y;
         };
+
+        this.start = function(){
+            var step = function () {
+                requestAnimationFrame(step);
+
+                if (!flyersStopped) {
+                    _self.move();
+                    //_self.collision();
+                }
+            }
+            step();
+        };
+
         this.collision = function(){
 
         };
-        this.start = function (){
-            this.draw(this.name, this.x, this.y, this.r);
-        };
+
         this.stop = function () {
 
         }
     }
-
 
     var aBall = new Ball();
     aBall.create();
@@ -98,7 +115,12 @@ function ready() {
     aBall2.start();
     ball.push(aBall2);
 
-    console.log(ball);
+    var aBall3 = new Ball();
+    aBall3.create();
+    aBall3.start();
+    ball.push(aBall3);
+
+
 
 
    /*
