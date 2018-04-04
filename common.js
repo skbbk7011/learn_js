@@ -29,6 +29,7 @@ function ready() {
                 console.log(itemImg + itemName);
                 document.querySelector('list').innerHTML = '<div class="item">'+ itemImg + itemName +'</div>';
             }
+
         };
     })
 }
