@@ -17,13 +17,12 @@ function ready() {
 
         script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = "http://pokeapi.co/api/v1/pokemon/?limit=12&format=json&callback=toJsonContainer";
+        script.src = "http://pokeapi.co/api/v1/pokemon/?limit=12&format=json&callback=callBackResp";
 
         document.getElementsByTagName('head')[0].appendChild(script);
 
-        toJsonContainer = function(data){
+        callBackResp = function(data){
             var itemsCollection= data.objects;
-            console.log(data.objects);
             for(i=0; i< itemsCollection; i++){
                 var itemImg = itemsCollection[i].resource_uri;
                 var itemName = itemsCollection[i].name;
@@ -31,8 +30,7 @@ function ready() {
                 document.querySelector('list').innerHTML = '<div class="item">'+ itemImg + itemName +'</div>';
             }
         };
-
-    });
+    })
 }
 
 document.addEventListener('DOMContentLoaded', ready);
