@@ -33,6 +33,10 @@ function ready() {
     function randomFloat(min, max) {
         return min + Math.random() * (max - min);
     }
+    function rect2Rect(obj1, obj2) {
+        return ( obj1.offsetLeft <= obj2.offsetLeft + obj2.offsetWidth && obj1.offsetLeft + obj1.offsetWidth  >=  obj2.offsetLeft && obj1.offsetTop + obj1.offsetHeight >=  obj2.offsetTop && obj1.offsetTop <= obj2.offsetTop +  obj2.offsetHeight );
+    }
+
 
     function Ball(){
         const sizeDefult = 40;
@@ -90,49 +94,35 @@ function ready() {
 
                 if (!flyersStopped) {
                     _self.move();
-                    //_self.collision();
+                    _self.collision();
                 }
-            }
+            };
             step();
         };
 
         this.collision = function(){
-
+           var teta =  Math.atan2(_self.y, _self.x);
         };
 
         this.stop = function () {
-
+            console.log('stop');
         }
     }
 
-    var aBall = new Ball();
-    aBall.create();
-    aBall.start();
-    ball.push(aBall);
 
-    var aBall2 = new Ball();
-    aBall2.create();
-    aBall2.start();
-    ball.push(aBall2);
-
-    var aBall3 = new Ball();
-    aBall3.create();
-    aBall3.start();
-    ball.push(aBall3);
-
-
-
-
-   /*
     var count = prompt();
     if (count > 0 && count <= 5){
         for(var i = 0; i < count; i++){
-            create(i,40);
+
+            eval('var aBall'+i+' = new Ball();');
+            eval('aBall'+i+'.create();');
+            eval('ball.push(aBall'+i+');');
         }
     } else {
         alert('0 < count < 5');
         var count = prompt();
-    }*/
+    }
+
 
 
 
@@ -140,21 +130,24 @@ function ready() {
 
     function onmouseup(/*MouseEvent*/ e){
         for(i=0;i<document.title;i++){
-            init(i);
+            for(var i = 0; i < count; i++){
+                eval('ball['+i+'].start();');
+            }
         }
         document.getElementById('borders').addEventListener("mouseover", mouseover, true);
         document.getElementById('borders').addEventListener("mouseout", mouseout, true);
     }
     function mouseover(/*MouseEvent*/ e){
         flag = true;
-        for(i=0;i<document.title;i++){
-            var nameVar = 'fly'+i;
-            var name = 'flyer'+i;
-            eval('var nameVar = new fly(name)') ;
+        for(var i = 0; i < count; i++){
+            eval('aBall'+i+'.start();');
         }
     }
     function mouseout(/*MouseEvent*/ e){
         flag = false;
+        for(var i = 0; i < count; i++){
+            eval('aBall'+i+'.stop();');
+        }
     }
 
     document.addEventListener("mouseup", onmouseup, true);
