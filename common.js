@@ -12,12 +12,15 @@
 
 
 function ready() {
+
+
+
     document.querySelector('button').addEventListener('click', function () {
         var xhttp2 = new XMLHttpRequest();
 
         script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = "http://pokeapi.co/api/v1/pokemon/?limit=12&format=json&callback=callBackResp";
+        script.src = "http://pokeapi.co/api/v1/pokemon/?limit=12&callback=callBackResp";
 
         document.getElementsByTagName('head')[0].appendChild(script);
 
@@ -31,8 +34,12 @@ function ready() {
             }
 
         };
+
+
     })
 }
+
+
 
 document.addEventListener('DOMContentLoaded', ready);
 
