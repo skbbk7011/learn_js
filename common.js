@@ -9,36 +9,77 @@
 * в каком то ключе ссылку на список покемонов. при обновлении страницы нужно чтоб покемоны загрузились сразу же
 * а не по кнопке!!!!!
 * */
+var arr = {};
 
-
-function ready() {
-
-
-
-    document.querySelector('button').addEventListener('click', function () {
-        var xhttp2 = new XMLHttpRequest();
-
-        script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "http://pokeapi.co/api/v1/pokemon/?limit=12&callback=callBackResp";
-
-        document.getElementsByTagName('head')[0].appendChild(script);
-
-        callBackResp = function(data){
-            var itemsCollection= data.objects;
-            for(i=0; i< itemsCollection; i++){
-                var itemImg = itemsCollection[i].resource_uri;
-                var itemName = itemsCollection[i].name;
-                console.log(itemImg + itemName);
-                document.querySelector('list').innerHTML = '<div class="item">'+ itemImg + itemName +'</div>';
-            }
-
-        };
-
-
-    })
+function getData(url) {
+    var xhttp2 = new XMLHttpRequest();
+    xhttp2.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            arr = JSON.parse(xhttp2.response);
+            return setData(arr);
+        }
+    };
+    xhttp2.open("GET", url, true);
+    xhttp2.send();
 }
 
+function setData(data) {
+    var nextHref = data.next;
+    var prevHref = data.previous;
+    var list = data.results;
+    setDataBtn('prev', prevHref);
+    setDataBtn('next', nextHref);
+    renderList(list);
+    console.log(data);
+}
+
+function setDataBtn(roleBtn, href) {
+    if (href == undefined) {
+        document.querySelector('.' + roleBtn).style.disabled = true;
+        document.querySelector('.' + roleBtn).removeAttribute('data-href');
+    } else {
+        document.querySelector('.' + roleBtn).style.disabled = false;
+        document.querySelector('.' + roleBtn).setAttribute('data-href', href);
+    }
+}
+
+function renderList(data) {
+    var oldList = document.querySelector('.people');
+    if(oldList){
+        oldList.remove();
+    }
+    var ul = document.createElement('ul');
+    ul.className = "people";
+    document.querySelector('.list').appendChild(ul);
+    for (var i = 0; i < data.length; i++) {
+        var newLi = document.createElement('li');
+        newLi.className = "title";
+        newLi.innerText = data[i].name;
+        document.querySelector('.people').appendChild(newLi);
+    }
+}
+
+function ready() {
+    document.querySelector('.getPeople').addEventListener('click', function () {
+        return getData('https://swapi.co/api/people/?limit=10');
+    });
+
+    document.addEventListener('click', function (e) {
+        e.preventDefault();
+        var items = e.target.classList;
+        for (var i = 0; i < items.length; i++) {
+            switch (items[i]) {
+                case 'navigation':
+                    getData(e.target.dataset.href);
+                    console.log( 'navigation' );
+                    break;
+                case 'title':
+                    console.log( 'title' );
+                    break;
+            }
+        }
+    })
+}
 
 
 document.addEventListener('DOMContentLoaded', ready);
