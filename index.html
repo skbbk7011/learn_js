@@ -2,16 +2,26 @@
 <head>
     <meta charset="utf-8">
     <script src="common.js"></script>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-
-<div class="container">
+<div class="wrapper">
+<div class="info">
+        <div class="close"></div>
+        <div><span>Name: </span><span class="name"></span></div>
+        <div><span>Birth day: </span><span class="birth-day"></span></div>
+        <div><span>Gender: </span><span class="gender"></span></div>
+        <div>
+            <span>Films:</span><div class="films-list inline-block"></div>
+        </div>
+    </div>
+<div class="actors">
+    <button class="getPeople">load</button>
     <div class="list"></div>
-    <div class="info"></div>
     <button class="prev navigation" data-href="" >prev</button>
     <button class="next navigation" data-href="" >next</button>
 </div>
-<button class="getPeople">getPeople</button>
+</div>
 
 </body>
 </html>

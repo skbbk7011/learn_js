@@ -12,69 +12,118 @@
 var arr = {};
 
 function getData(url) {
-    var xhttp2 = new XMLHttpRequest();
-    xhttp2.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            arr = JSON.parse(xhttp2.response);
-            return setData(arr);
-        }
-    };
-    xhttp2.open("GET", url, true);
-    xhttp2.send();
+    return new Promise(function (succeed, fail) {
+        var request = new XMLHttpRequest();
+        request.open("GET", url, true);
+        request.addEventListener("load", function() {
+            if (request.status < 400)
+                succeed(request.response);
+            else
+                fail(new Error("Request failed: " + request.statusText));
+        });
+        request.addEventListener("error", function() {
+            fail(new Error("Network error"));
+        });
+        request.send();
+
+
+    })
+}
+
+function getPeopleInfo(data){
+     console.log(data);
+     document.querySelector('.name').innerText = data.name;
+     document.querySelector('.birth-day').innerText = data.birth_year;
+     document.querySelector('.gender').innerText = data.gender;
+     var filmsTitle = [];
+     var films = data.films;
+
+     for(var i = 0; i < films.length; i++){
+         getData(films[i]).then(function(response) {
+             filmInfo = JSON.parse(response);
+             var o = new Object();
+             o.name = filmInfo.title;
+              filmsTitle.push(o);
+             return renderList(filmsTitle, 'films-list__ul', 'film', 'films-list');
+         })
+     }
+
 }
 
 function setData(data) {
     var nextHref = data.next;
     var prevHref = data.previous;
     var list = data.results;
+
     setDataBtn('prev', prevHref);
     setDataBtn('next', nextHref);
-    renderList(list);
-    console.log(data);
+    renderList(list, 'people', "title", "list");
 }
 
 function setDataBtn(roleBtn, href) {
     if (href == undefined) {
         document.querySelector('.' + roleBtn).style.disabled = true;
+        document.querySelector('.' + roleBtn).classList.add('none');
+        document.querySelector('.' + roleBtn).classList.remove('inline-block');
         document.querySelector('.' + roleBtn).removeAttribute('data-href');
     } else {
         document.querySelector('.' + roleBtn).style.disabled = false;
+        document.querySelector('.' + roleBtn).classList.add('inline-block');
+        document.querySelector('.' + roleBtn).classList.remove('none');
         document.querySelector('.' + roleBtn).setAttribute('data-href', href);
     }
 }
 
-function renderList(data) {
-    var oldList = document.querySelector('.people');
+function renderList(data, nameClassList, nameClassItem, pasteIn) {
+    console.log(data);
+    var oldList = document.querySelector('.' + nameClassList);
     if(oldList){
         oldList.remove();
     }
     var ul = document.createElement('ul');
-    ul.className = "people";
-    document.querySelector('.list').appendChild(ul);
+    ul.className = nameClassList;
+    document.querySelector('.' + pasteIn).appendChild(ul);
     for (var i = 0; i < data.length; i++) {
         var newLi = document.createElement('li');
-        newLi.className = "title";
+        newLi.className = nameClassItem;
+        newLi.id = i;
         newLi.innerText = data[i].name;
-        document.querySelector('.people').appendChild(newLi);
+        document.querySelector('.' + nameClassList).appendChild(newLi);
     }
 }
 
 function ready() {
     document.querySelector('.getPeople').addEventListener('click', function () {
-        return getData('https://swapi.co/api/people/?limit=10');
+        var mainTitle = document.createElement('h2');
+        this.style.display = 'none';
+        mainTitle.innerText = 'Actors:';
+        getData("https://swapi.co/api/people/?limit=10").then(function(response) {
+            document.querySelector('.list').appendChild(mainTitle);
+            arr = JSON.parse(response);
+            return setData(arr);
+        })
+
     });
 
     document.addEventListener('click', function (e) {
         e.preventDefault();
         var items = e.target.classList;
+        var id = e.target.id;
+        var block = document.querySelector('.info');
         for (var i = 0; i < items.length; i++) {
             switch (items[i]) {
                 case 'navigation':
-                    getData(e.target.dataset.href);
-                    console.log( 'navigation' );
+                    getData(e.target.dataset.href).then(function(response) {
+                        arr = JSON.parse(response);
+                        return setData(arr);
+                    })
                     break;
                 case 'title':
-                    console.log( 'title' );
+                    getPeopleInfo(arr.results[id]);
+                    block.classList.add('_active');
+                    break;
+                case 'close':
+                    block.classList.remove('_active');
                     break;
             }
         }
