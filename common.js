@@ -102,7 +102,6 @@ function ready() {
             arr = JSON.parse(response);
             return setData(arr);
         })
-        console.log(localStorage.getItem('href'));
     }
 
     document.querySelector('.getPeople').addEventListener('click', function () {
