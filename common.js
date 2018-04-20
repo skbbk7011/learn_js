@@ -12,6 +12,7 @@
 var arr = {};
 
 function getData(url) {
+
     return new Promise(function (succeed, fail) {
         var request = new XMLHttpRequest();
         request.open("GET", url, true);
@@ -25,13 +26,10 @@ function getData(url) {
             fail(new Error("Network error"));
         });
         request.send();
-
-
     })
 }
 
 function getPeopleInfo(data){
-     console.log(data);
      document.querySelector('.name').innerText = data.name;
      document.querySelector('.birth-day').innerText = data.birth_year;
      document.querySelector('.gender').innerText = data.gender;
@@ -75,7 +73,6 @@ function setDataBtn(roleBtn, href) {
 }
 
 function renderList(data, nameClassList, nameClassItem, pasteIn) {
-    console.log(data);
     var oldList = document.querySelector('.' + nameClassList);
     if(oldList){
         oldList.remove();
@@ -93,10 +90,26 @@ function renderList(data, nameClassList, nameClassItem, pasteIn) {
 }
 
 function ready() {
+
+    if(localStorage.getItem('href')){
+        document.getElementById('saveData').checked = true;
+        var mainTitle = document.createElement('h2');
+        document.querySelector('.getPeople').style.display = 'none';
+        mainTitle.innerText = 'Actors:';
+        document.getElementById('saveData').value = localStorage.getItem('href');
+        getData(localStorage.getItem('href')).then(function(response) {
+            document.querySelector('.list').appendChild(mainTitle);
+            arr = JSON.parse(response);
+            return setData(arr);
+        })
+        console.log(localStorage.getItem('href'));
+    }
+
     document.querySelector('.getPeople').addEventListener('click', function () {
         var mainTitle = document.createElement('h2');
         this.style.display = 'none';
         mainTitle.innerText = 'Actors:';
+        document.getElementById('saveData').value = 'https://swapi.co/api/people/?limit=10';
         getData("https://swapi.co/api/people/?limit=10").then(function(response) {
             document.querySelector('.list').appendChild(mainTitle);
             arr = JSON.parse(response);
@@ -105,14 +118,24 @@ function ready() {
 
     });
 
+
     document.addEventListener('click', function (e) {
-        e.preventDefault();
         var items = e.target.classList;
         var id = e.target.id;
         var block = document.querySelector('.info');
+
         for (var i = 0; i < items.length; i++) {
             switch (items[i]) {
+                case 'save':
+                    if(document.getElementById('saveData').checked == true){
+                        var url = document.getElementById('saveData').value;
+                        localStorage.setItem('href', url);
+                    } else {
+                        localStorage.removeItem('href');
+                    }
+                    break;
                 case 'navigation':
+                    document.getElementById('saveData').value = e.target.dataset.href;
                     getData(e.target.dataset.href).then(function(response) {
                         arr = JSON.parse(response);
                         return setData(arr);
@@ -126,6 +149,13 @@ function ready() {
                     block.classList.remove('_active');
                     break;
             }
+
+            if((items[i] == 'navigation' || items[i] == 'getPeople') && document.getElementById('saveData').checked == true){
+                var url = document.getElementById('saveData').value;
+                localStorage.setItem('href', url);
+            }
+
+
         }
     })
 }
